@@ -1,6 +1,7 @@
 // A simple redux store/actions/reducer implementation.
 // A true app would be more complex and separated into different files.
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 // The actions are the "names" of the changes that can happen to the store
 export const actions = {
@@ -45,5 +46,10 @@ const defaultTasks = [
   { id: '4', title: 'Something again', state: 'TASK_INBOX' },
 ];
 
-// We export the constructed redux store
-export default createStore(reducer, { tasks: defaultTasks });
+const store = createStore(
+  reducer,
+  { tasks: defaultTasks },
+  composeWithDevTools(applyMiddleware())
+);
+
+export default store;
